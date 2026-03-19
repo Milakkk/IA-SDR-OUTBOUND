@@ -1,0 +1,16 @@
+{
+  "default": {
+    "calendarId": "primary",
+    "timezone": "America/Sao_Paulo",
+    "meetingDurationMinutes": 30,
+    "workStart": "09:00",
+    "workEnd": "18:00"
+  },
+  "grow": {
+    "calendarId": "primary",
+    "timezone": "America/Sao_Paulo",
+    "meetingDurationMinutes": 30,
+    "workStart": "09:00",
+    "workEnd": "18:00"
+  }
+}

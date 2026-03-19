@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+openai
+python-dotenv
+google-api-python-client
+google-auth
+google-auth-httplib2
+python-dateutil
+requests
+simple-salesforce
+openpyxl
+PyPDF2
+pdfplumber
+slack-bolt
+qrcode
+pillow

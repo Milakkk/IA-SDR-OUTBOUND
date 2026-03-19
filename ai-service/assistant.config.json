@@ -1,0 +1,50 @@
+{
+  "sectors": {
+    "grow": {
+      "description": "Iluminação para cultivo de mudas, casa de vegetação e estufas",
+      "crm_target": "salesforce",
+      "extraction_fields": [
+        {"key": "empresa", "prompt": "Qual o nome da empresa?"},
+        {"key": "estrutura", "prompt": "Há casa de vegetação/estufa?"},
+        {"key": "cultivo", "prompt": "Qual cultivo? (eucalipto, pinus, café, cana, microverde, hortaliças)"},
+        {"key": "muda_sem_cultivo", "prompt": "Precisa ser muda (sem cultivo)?"},
+        {"key": "cidade", "prompt": "Qual a cidade?"},
+        {"key": "area", "prompt": "Qual a área/tamanho da estrutura?"}
+      ],
+      "slack_notify": true
+    }
+  },
+  "routing": {
+    "resolve_sector_rules": [
+      {"keywords": ["estufa", "casa de vegetação", "cultivo", "grow", "hortaliças", "café", "eucalipto", "pinus", "muda", "mudas", "viveiro", "microverde"], "sector": "grow"}
+    ],
+      "assign": {
+      "strategy": "grow_only",
+      "fallback": "default_seller"
+    }
+  },
+  "calendar": {
+    "provider": "google",
+    "timezone": "America/Sao_Paulo",
+    "work_hours": {"start": "09:00", "end": "18:00"},
+    "slot_step_min": 30,
+    "default_duration_min": 30,
+    "freebusy_max_days_ahead": 14,
+    "impersonation": "per_seller_email"
+  },
+  "slack": {
+    "notify_method": "dm",
+    "id_type": "user_or_dm",
+    "templates": {
+      "lead_created": "Novo lead (Grow) para Eduardo Sauaf: {summary}",
+      "lead_created": "Novo lead (Grow): {summary}",
+      "meeting_scheduled": "Reunião agendada: {date} {time} ({duration} min) – {title}"
+    }
+  },
+  "crm": {
+    "salesforce": {
+      "fields_minimum": ["Company", "LastName", "Email", "Phone", "LeadSource", "Description"],
+      "owner_field": "salesforce_user_id"
+    }
+  }
+}

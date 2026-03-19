@@ -1,0 +1,152 @@
+{
+  "standard_fields": {
+    "FirstName": "Nome do contato (primeiro nome)",
+    "LastName": "Sobrenome do contato",
+    "Company": "Nome da empresa/organização",
+    "Title": "Cargo do contato",
+    "Email": "E-mail do contato",
+    "Phone": "Telefone fixo",
+    "MobilePhone": "Telefone celular",
+    "Website": "Website da empresa",
+    "Street": "Endereço - Rua",
+    "City": "Endereço - Cidade",
+    "State": "Endereço - Estado (UF)",
+    "PostalCode": "Endereço - CEP",
+    "Country": "Endereço - País",
+    "LeadSource": "Origem do lead",
+    "Status": "Status do lead",
+    "Industry": "Setor/Indústria",
+    "AnnualRevenue": "Receita anual",
+    "NumberOfEmployees": "Número de funcionários",
+    "Description": "Descrição/observações",
+    "OwnerId": "Proprietário do lead"
+  },
+  "sector_mapping": {
+    "industrial": {
+      "Company": ["company", "empresa", "nome_empresa"],
+      "FirstName": ["contact_name", "nome", "primeiro_nome"],
+      "LastName": ["sobrenome", "last_name"],
+      "Title": ["cargo", "title", "funcao"],
+      "Email": ["email"],
+      "Phone": ["phone", "telefone"],
+      "MobilePhone": ["mobile", "celular", "whatsapp"],
+      "City": ["city", "cidade"],
+      "State": ["state", "estado", "uf"],
+      "PostalCode": ["cep", "postal_code"],
+      "Street": ["endereco", "rua", "street", "localizacao"],
+      "Industry": "Manufacturing",
+      "LeadSource": "WhatsApp",
+      "Status": "Open - Not Contacted",
+      "Description": [
+        "tipo_lugar",
+        "tamanho",
+        "area",
+        "dimensoes",
+        "projeto_luminotecnico",
+        "segmento",
+        "publico_privado",
+        "nivel_iluminacao",
+        "iluminancia"
+      ],
+      "custom_fields": {
+        "Projeto_Luminotecnico__c": ["projeto_luminotecnico"],
+        "Segmento__c": ["segmento"],
+        "Publico_Privado__c": ["publico_privado"],
+        "Nivel_Iluminacao__c": ["nivel_iluminacao", "iluminancia"]
+      }
+    },
+    "esportivo": {
+      "Company": ["company", "empresa", "clube", "prefeitura", "organizacao"],
+      "FirstName": ["contact_name", "nome", "primeiro_nome"],
+      "LastName": ["sobrenome", "last_name"],
+      "Title": ["cargo", "title", "funcao"],
+      "Email": ["email"],
+      "Phone": ["phone", "telefone"],
+      "MobilePhone": ["mobile", "celular", "whatsapp"],
+      "City": ["city", "cidade"],
+      "State": ["state", "estado", "uf"],
+      "PostalCode": ["cep", "postal_code"],
+      "Street": ["endereco", "rua", "street", "localizacao"],
+      "Industry": "Sports & Recreation",
+      "LeadSource": "WhatsApp",
+      "Status": "Open - Not Contacted",
+      "Description": [
+        "tipo_local",
+        "dimensoes",
+        "iluminancia",
+        "projeto_luminotecnico",
+        "segmento"
+      ],
+      "custom_fields": {
+        "Dimensoes__c": ["dimensoes", "tamanho", "area"],
+        "Iluminancia__c": ["iluminancia", "nivel_iluminacao"],
+        "Projeto_Luminotecnico__c": ["projeto_luminotecnico"],
+        "Segmento__c": ["segmento", "clube", "prefeitura", "privado"]
+      }
+    },
+    "cidades": {
+      "Company": ["company", "prefeitura", "municipio", "orgao_publico"],
+      "FirstName": ["contact_name", "nome", "primeiro_nome"],
+      "LastName": ["sobrenome", "last_name"],
+      "Title": ["cargo", "title", "funcao"],
+      "Email": ["email"],
+      "Phone": ["phone", "telefone"],
+      "MobilePhone": ["mobile", "celular", "whatsapp"],
+      "City": ["city", "cidade"],
+      "State": ["state", "estado", "uf"],
+      "PostalCode": ["cep", "postal_code"],
+      "Street": ["endereco", "rua", "street", "localizacao"],
+      "Industry": "Government",
+      "LeadSource": "WhatsApp",
+      "Status": "Open - Not Contacted",
+      "Description": [
+        "cnpj",
+        "produto",
+        "localizacao",
+        "projeto_orcamento",
+        "licitacao"
+      ],
+      "custom_fields": {
+        "CNPJ__c": ["cnpj"],
+        "Produto__c": ["produto", "solar", "led", "bateria"],
+        "Localizacao__c": ["localizacao", "endereco_projeto"],
+        "Projeto_Orcamento__c": ["projeto_orcamento"],
+        "Licitacao__c": ["licitacao"]
+      }
+    },
+    "grow": {
+      "Company": ["company", "empresa", "viveiro", "estufa"],
+      "FirstName": ["contact_name", "nome", "primeiro_nome"],
+      "LastName": ["sobrenome", "last_name"],
+      "Title": ["cargo", "title", "funcao"],
+      "Email": ["email"],
+      "Phone": ["phone", "telefone"],
+      "MobilePhone": ["mobile", "celular", "whatsapp"],
+      "City": ["city", "cidade"],
+      "State": ["state", "estado", "uf"],
+      "PostalCode": ["cep", "postal_code"],
+      "Street": ["endereco", "rua", "street", "localizacao"],
+      "Industry": "Agriculture",
+      "LeadSource": "WhatsApp",
+      "Status": "Open - Not Contacted",
+      "Description": [
+        "estrutura",
+        "cultivo",
+        "muda",
+        "area",
+        "dimensoes"
+      ],
+      "custom_fields": {
+        "Estrutura__c": ["estrutura", "estufa", "casa_vegetacao"],
+        "Tipo_Cultivo__c": ["cultivo", "eucalipto", "pinus", "cafe", "cana"],
+        "Muda__c": ["muda"]
+      }
+    }
+  }
+}
+
+
+
+
+
+

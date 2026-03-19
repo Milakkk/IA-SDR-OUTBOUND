@@ -1,0 +1,51 @@
+﻿# dependencies
+**/node_modules/
+
+# env/secrets
+.env
+*.env
+.env.*
+!.env.example
+
+# runtime/auth/cache
+.baileys_auth/
+.wwebjs_cache/
+**/.wwebjs_auth/
+.venv/
+__pycache__/
+*.pyc
+whatsapp_qr.json
+whatsapp_ready.json
+whatsapp_reset_request.json
+
+# logs/state
+*.log
+*.err
+conversations_state.json
+conversations.json
+CONVERSAS/
+outbound_data/
+run_logs/
+outbound_data/slack_dispatch_state.json
+outbound_data/responses_tracking.json
+
+# large datasets/artifacts
+*.csv
+*.pptx
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.mp4
+*.opus
+*.vcf
+
+# local/editor
+.trae/
+.DS_Store
+Thumbs.db
+
+credentials.json
+*-credentials.json
+winged-precept-credentials.json

@@ -1,0 +1,208 @@
+{
+  "temperature": 0.3,
+  "top_p": 0.9,
+  "functions": [
+    {
+      "name": "classify_sector",
+      "description": "Classifica a mensagem em industrial, esportivo, cidades ou grow.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "text": { "type": "string", "description": "Texto recebido do lead." }
+        },
+        "required": ["text"]
+      }
+    },
+    {
+      "name": "extract_sector_data",
+      "description": "Extrai campos essenciais do setor e aponta pendências.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sector": { "type": "string", "description": "industrial | esportivo | cidades | grow." },
+          "text": { "type": "string", "description": "Mensagem completa do lead." }
+        },
+        "required": ["sector", "text"]
+      }
+    },
+    {
+      "name": "route_seller",
+      "description": "Seleciona o vendedor com base em DDD/estado e setor. CHAME ESTA FUNÇÃO sempre que identificar o setor do lead e tiver telefone/cidade disponível. Retorna um objeto com 'name' (nome do vendedor), 'email', etc. Se 'name' for 'Vendedor Default' ou 'Qualquer um dos 4', use resposta genérica ao cliente.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sector": { "type": "string", "description": "industrial | esportivo | cidades | grow." },
+          "phone": { "type": "string", "description": "Telefone do lead (para DDD). Use o telefone do contato se disponível, ou \"\" se desconhecido." },
+          "state": { "type": "string", "description": "UF do lead (ex: PR, SP, SC). Use \"\" se desconhecida." },
+          "city": { "type": "string", "description": "Cidade do lead. Use \"\" se desconhecida." }
+        },
+        "required": ["sector", "phone", "state", "city"]
+      }
+    },
+    {
+      "name": "create_lead_salesforce",
+      "description": "Cria um lead no Salesforce com TODOS os dados coletados, mapeados automaticamente por setor. Use esta função quando tiver coletado os dados mínimos do lead (nome, e-mail, cidade, setor). A função mapeia automaticamente todos os campos coletados para os campos corretos do Salesforce de acordo com o setor (industrial, esportivo, cidades, grow). Inclua TODOS os dados coletados: nome, e-mail, telefone, cidade, estado, empresa, cargo, e dados específicos do setor.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "object",
+            "description": "TODOS os dados coletados do lead. Inclua: nome/contact_name, e-mail/email, telefone/phone, cidade/city, estado/state, empresa/company, cargo/title, e dados específicos do setor (tipo_lugar, tamanho, area, dimensoes, projeto_luminotecnico, segmento, publico_privado, nivel_iluminacao, iluminancia para industrial; tipo_local, dimensoes, iluminancia, projeto_luminotecnico, segmento para esportivo; cnpj, produto, localizacao, projeto_orcamento, licitacao para cidades; estrutura, cultivo, muda, area para grow).",
+            "additionalProperties": true
+          },
+          "owner_id": {
+            "type": "string",
+            "description": "ID do usuário no Salesforce. Use \"\" se não houver."
+          }
+        },
+        "required": ["data", "owner_id"]
+      }
+    },
+    {
+      "name": "create_person_and_deal_pipedrive",
+      "description": "Cria pessoa e negócio no Pipedrive e atribui o owner.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "object",
+            "description": "Dados da pessoa/negócio (title, value, currency, etc.).",
+            "additionalProperties": true
+          },
+          "owner_id": {
+            "type": "integer",
+            "description": "ID do usuário no Pipedrive. Use 0 se não houver."
+          }
+        },
+        "required": ["data", "owner_id"]
+      }
+    },
+    {
+      "name": "find_next_slots",
+      "description": "Lista próximas janelas disponíveis na agenda do vendedor. CHAME ESTA FUNÇÃO quando o lead quiser agendar. Use o calendar_id retornado por route_seller (campo 'calendarId') ou 'primary' se não houver. Para start_from, use a data/hora que o lead mencionou (ex: 'segunda-feira 09:00', 'segunda pela manhã', 'amanhã às 14h'). Retorna até 3 slots disponíveis.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "calendar_id": { "type": "string", "description": "ID do calendário do vendedor. Use o campo 'calendarId' retornado por route_seller, ou 'primary' se não houver. NUNCA use um email genérico." },
+          "start_from": { "type": "string", "description": "Data/hora inicial. Pode ser uma data/hora específica (ex: 'segunda-feira 09:00', '2025-12-02 09:00') ou relativa (ex: 'amanhã', 'segunda pela manhã'). Se o lead disse 'segunda pela manhã', use 'segunda-feira 09:00'. Se disse 'às 9 horas', use a data mencionada + '09:00'." },
+          "days_ahead": { "type": "integer", "description": "Dias à frente para buscar (padrão 14). Use 14." },
+          "duration_min": { "type": "integer", "description": "Duração em minutos (padrão 30). Use 30." },
+          "timezone": { "type": "string", "description": "Fuso horário. Use 'America/Sao_Paulo'." }
+        },
+        "required": ["calendar_id", "start_from", "days_ahead", "duration_min", "timezone"]
+      }
+    },
+    {
+      "name": "is_free",
+      "description": "Verifica se um intervalo de tempo está livre no calendário.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "calendar_id": { "type": "string", "description": "ID do calendário (ex.: \"primary\")." },
+          "start_dt": { "type": "string", "description": "Início em ISO." },
+          "end_dt": { "type": "string", "description": "Fim em ISO." }
+        },
+        "required": ["calendar_id", "start_dt", "end_dt"]
+      }
+    },
+    {
+      "name": "create_event",
+      "description": "Cria um evento na agenda do vendedor. CHAME ESTA FUNÇÃO APENAS após is_free confirmar que o horário está livre. Use o calendar_id retornado por route_seller. Inclua o email do lead e o email do vendedor em attendees. Summary deve ser algo como 'Reunião Silicon - [Nome do Lead]'. Só confirme o agendamento ao lead se create_event retornar success: true.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "calendar_id": { "type": "string", "description": "ID do calendário (ex.: \"primary\")." },
+          "summary": { "type": "string", "description": "Título do evento." },
+          "description": { "type": "string", "description": "Descrição. Use \"\" se não houver." },
+          "start_dt": { "type": "string", "description": "Início em ISO." },
+          "end_dt": { "type": "string", "description": "Fim em ISO." },
+          "attendees": {
+            "type": "array",
+            "description": "E-mails dos participantes. Use [] se não houver.",
+            "items": { "type": "string" }
+          },
+          "location": { "type": "string", "description": "Local. Use \"\" se não houver." }
+        },
+        "required": ["calendar_id", "summary", "description", "start_dt", "end_dt"]
+      }
+    },
+    {
+      "name": "notify_seller_slack",
+      "description": "Envia DM no Slack ao vendedor com resumo do lead e/ou reunião.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slack_user_id": { "type": "string", "description": "ID do usuário no Slack." },
+          "text": { "type": "string", "description": "Mensagem a ser enviada." }
+        },
+        "required": ["slack_user_id", "text"]
+      }
+    },
+    {
+      "name": "summarize_lead",
+      "description": "Gera resumo curto e amigável do lead para CRM/Slack.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sector": { "type": "string", "description": "industrial | esportivo | cidades | grow." },
+          "data": { "type": "object", "description": "Campos coletados do lead.", "additionalProperties": true }
+        },
+        "required": ["sector", "data"]
+      }
+    }
+    ,
+    {
+      "name": "query_product_knowledge",
+      "description": "Consulta conhecimento técnico de produtos exclusivamente nos documentos da pasta data/ (fichas técnicas e apresentações em PDF). Use esta função quando o lead fizer perguntas técnicas sobre produtos, especificações, características, eficiência, garantias, etc. Retorna informações extraídas dos PDFs técnicos.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "query": { "type": "string", "description": "Pergunta técnica do lead sobre produtos/serviços (ex: 'qual a eficiência do SUNNA?', 'quantos watts tem o GH100?', 'qual o IP do produto?')." },
+          "top_k": { "type": "integer", "description": "Quantidade de resultados (padrão 3)." }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "query_marketing_content",
+      "description": "Busca conteúdos e cases atuais da Silicon para encantar o lead.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "topic": { "type": "string", "description": "Tema/assunto do interesse do lead. Use \"\" se não houver." },
+          "max_items": { "type": "integer", "description": "Máximo de itens a retornar (padrão 3)." },
+          "sources": {
+            "type": "array",
+            "description": "URLs de origem. Use padrão se não houver.",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["topic"]
+      }
+    }
+  ]
+}

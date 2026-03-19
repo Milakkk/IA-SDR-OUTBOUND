@@ -1,0 +1,59 @@
+{
+  "allowed_contacts": [],
+  "_comment": "Exemplo público. Defina contatos autorizados localmente ou mantenha vazio para fluxo outbound controlado por runtime.",
+  "outbound_mode": true,
+  "_outbound_comment": "Modo outbound ativado: aceita respostas de números que receberam mensagem inicial via send_outbound_broadcast.js",
+  "ai_service": {
+    "url": "http://127.0.0.1:8001",
+    "port": 8001
+  },
+  "whatsapp": {
+    "auto_greeting_on_ready": false,
+    "session_id": "default"
+  },
+  "salesforce": {
+    "username": "",
+    "password": "",
+    "security_token": "",
+    "api_version": "59.0",
+    "domain": "login"
+  },
+  "pipedrive": {
+    "api_token": "",
+    "base_url": "https://silicon.pipedrive.com"
+  },
+  "slack": {
+    "bot_token": "",
+    "webhook_url": ""
+  },
+  "google_calendar": {
+    "credentials_path": "",
+    "timezone": "America/Sao_Paulo"
+  },
+  "deepseek": {
+    "api_key": "",
+    "model": "deepseek-chat"
+  },
+  "slack_bot": {
+    "enabled": true,
+      "authorized_user_ids": [],
+    "authorized_user_id": "",
+    "quiet_hours": {
+      "start": "11:00",
+      "end": "20:30"
+    },
+    "guardrails": {
+      "batch_cap": 80,
+      "hourly_cap": 120,
+      "daily_cap": 5,
+      "daily_window_hours": 24,
+      "min_interval_seconds": 6,
+      "max_interval_seconds": 14,
+      "break_every": 20,
+      "break_seconds": 90,
+      "max_consecutive_errors": 5,
+      "pause_minutes_on_circuit_breaker": 10
+    },
+    "default_tone": "aggressive"
+  }
+}

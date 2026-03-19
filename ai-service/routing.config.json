@@ -1,0 +1,40 @@
+{
+  "sectors": {
+    "grow": {
+      "keywords": ["grow", "cultivo", "muda", "mudas", "estufa", "casa de vegetação", "casa de vegetacao", "hortaliças", "hortalicas", "microverde", "viveiro", "eucalipto", "pinus", "café", "cafe", "cana"],
+      "questions": [
+        "Qual a cidade?",
+        "Qual o nome da empresa?",
+        "Tem estrutura de casa de vegetação ou estufa?",
+        "Cultivo (eucalipto, pinus, café, cana, microverde, hortaliças)",
+        "Precisa ser muda (sem cultivo)?",
+        "Qual a área/tamanho da estrutura?"
+      ]
+    }
+  },
+  "routing": {
+    "defaultSeller": {
+      "name": "Seller Name",
+      "email": "seller@example.com",
+      "slack_user_id": "",
+      "salesforce_user_id": "",
+      "pipedrive_user_id": null,
+      "calendarId": "primary"
+    },
+    "rules": [
+      {
+        "seller": {
+          "name": "Seller Name",
+          "email": "seller@example.com",
+          "slack_user_id": "",
+          "salesforce_user_id": "",
+          "pipedrive_user_id": null,
+          "calendarId": "primary"
+        },
+        "ddds": [],
+        "states": [],
+        "sectors": ["grow"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "whatsapp-bot",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:qr": "set RESET_SESSION=true&& node index.js",
+    "start:chrome": "set HEADLESS=false&& set CHROME_PATH=C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe&& node index.js"
+  },
+  "dependencies": {
+    "@adiwajshing/baileys": "^5.0.0",
+    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "axios": "^1.13.2",
+    "dotenv": "^16.6.1",
+    "googleapis": "^166.0.0",
+    "puppeteer": "^24.31.0",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.34.2"
+  }
+}
